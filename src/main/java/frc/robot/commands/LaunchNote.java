@@ -24,6 +24,7 @@ public class LaunchNote extends Command {
     // save the launcher system internally
     m_launcher = launcher;
 
+    
     // indicate that this command requires the launcher system
     addRequirements(m_launcher);
   }
