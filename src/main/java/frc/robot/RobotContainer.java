@@ -5,9 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -16,7 +13,6 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.LaunchNote;
 import frc.robot.commands.PrepareLaunch;
-import frc.robot.commands.RobotLift;
 import frc.robot.subsystems.PWMDrivetrain;
 import frc.robot.subsystems.PWMLauncher;
 
@@ -42,17 +38,15 @@ public class RobotContainer {
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController m_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
-  private final UsbCamera frontCamera;
-  private final UsbCamera backCamera;
- private final PWMSparkMax liftLeft = new PWMSparkMax(3);
- private final PWMSparkMax liftRight = new PWMSparkMax(4);
+//  private final PWMSparkMax liftLeft = new PWMSparkMax(3);
+//  private final PWMSparkMax liftRight = new PWMSparkMax(4);
 
   /** The container for the robot. Contains subsystems, OI device4s, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    CameraServer.startAutomaticCapture(0);
+
     configureBindings();
-    frontCamera = CameraServer.startAutomaticCapture(0);
-    backCamera = CameraServer.startAutomaticCapture(1);
     
   }
 
@@ -73,8 +67,8 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(
         new RunCommand(
             () ->
-                m_drivetrain.tankdrive(
-                    -m_driverController.getLeftY(), -m_driverController.getRightY()),
+                m_drivetrain.tankDrive(
+                    m_driverController.getLeftY(), m_driverController.getRightY()),
             m_drivetrain));
     // m_drivetrain.setDefaultCommand(
     //     new RunCommand(
@@ -90,10 +84,12 @@ public class RobotContainer {
                 .withTimeout(LauncherConstants.kLauncherDelay)
                 .andThen(new LaunchNote(m_launcher))
                 .handleInterrupt(() -> m_launcher.stop()));
-    m_operatorController.rightBumper().whileTrue(new RobotLift(liftLeft,.3));
-    m_operatorController.leftBumper().whileTrue(new RobotLift(liftRight,.3));
-    m_operatorController.rightTrigger().whileTrue(new RobotLift(liftLeft,-.3));
-    m_operatorController.leftTrigger().whileTrue(new RobotLift(liftRight,-.3));
+
+    // TODO: uncomment when in use in competition 2
+    // m_operatorController.rightBumper().whileTrue(new RobotLift(liftLeft,.3));
+    // m_operatorController.leftBumper().whileTrue(new RobotLift(liftRight,.3));
+    // m_operatorController.rightTrigger().whileTrue(new RobotLift(liftLeft,-.3));
+    // m_operatorController.leftTrigger().whileTrue(new RobotLift(liftRight,-.3));
     // Set up a binding to run the intake command while the operator is pressing and holding the
     // b button
     m_operatorController.b().whileTrue(m_launcher.getIntakeCommand());

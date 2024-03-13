@@ -51,21 +51,11 @@ public class PWMDrivetrain extends SubsystemBase {
     m_drivetrain.arcadeDrive(speed, rotation);
   }
 
-  public void tankdrive(double L3,double R3){
-    m_drivetrain.tankDrive(L3, R3);
+  /* Method to control the drivetrain using arcade drive. Tank drive allows the user to control the speed and rotation using the left and right stick.*/
+  public void tankDrive (double speed_x, double speed_y) {
+    m_drivetrain.tankDrive(speed_x, speed_y);
   }
-  public void controllerdrive(double lefttrigger, double righttrigger, double leftanalog) {
-    double speed= 0;
-    if (lefttrigger > .2){
-      speed = -lefttrigger;
-    }
-    if (righttrigger > .2){
-      speed = righttrigger;
-    }
 
-    m_drivetrain.arcadeDrive(speed, leftanalog);
-  }
- 
   @Override
   public void periodic() {
     /*This method will be called once per scheduler run. It can be used for running tasks we know we want to update each
