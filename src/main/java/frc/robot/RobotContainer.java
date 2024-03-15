@@ -68,7 +68,7 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_drivetrain.tankDrive(
-                    m_driverController.getLeftY(), m_driverController.getRightY()),
+                    m_driverController.getLeftY() * 1, m_driverController.getRightY() * 1),
             m_drivetrain));
     // m_drivetrain.setDefaultCommand(
     //     new RunCommand(
@@ -105,4 +105,8 @@ public class RobotContainer {
   
     return Autos.exampleAuto(m_drivetrain);
   }
+
+  // public Command getRRAutonamous() {
+
+  // }
 }
