@@ -55,6 +55,7 @@ public final class Constants {
 
     public static final double kLauncherDelay = 1;
 
-    public static final double AUTONAMOUS_DRIVE_SPEED = 0.5;
+    public static final float DRIVE_SPEED = 1f;
+    public static final float AUTONAMOUS_DRIVE_SPEED = 0.6f;
   }
 }

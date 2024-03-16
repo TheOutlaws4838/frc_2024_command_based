@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.LauncherConstants.DRIVE_SPEED;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -78,7 +80,7 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(
         new RunCommand(
             () -> m_drivetrain.tankDrive(
-                m_driverController.getLeftY() * 1, m_driverController.getRightY() * 1),
+                m_driverController.getLeftY() * DRIVE_SPEED, m_driverController.getRightY() * DRIVE_SPEED),
             m_drivetrain));
     // m_drivetrain.setDefaultCommand(
     // new RunCommand(
@@ -99,14 +101,6 @@ public class RobotContainer {
                 .andThen(new LaunchNote(m_launcher))
                 .handleInterrupt(() -> m_launcher.stop()));
 
-    // TODO: uncomment when in use in competition 2
-    // m_operatorController.rightBumper().whileTrue(new RobotLift(liftLeft,.3));
-    // m_operatorController.leftBumper().whileTrue(new RobotLift(liftRight,.3));
-    // m_operatorController.rightTrigger().whileTrue(new RobotLift(liftLeft,-.3));
-    // m_operatorController.leftTrigger().whileTrue(new RobotLift(liftRight,-.3));
-    // Set up a binding to run the intake command while the operator is pressing and
-    // holding the
-    // b button
     m_operatorController.b().whileTrue(m_launcher.getIntakeCommand());
   }
 
