@@ -17,7 +17,9 @@ public class AutonamousCommands extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         // go forward for 2 seconds
+        new Deeeeeeeeeeeeelay(5.0),
         new AutonamousForward(drivetrain),
         new AutonamousBackward(drivetrain));
+        
   }
 }

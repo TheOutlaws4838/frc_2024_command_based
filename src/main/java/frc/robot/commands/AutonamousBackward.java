@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import static frc.robot.Constants.LauncherConstants.AUTONAMOUS_DRIVE_SPEED;
+import static frc.robot.Constants.LauncherConstants.TIMING;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -40,7 +41,7 @@ public class AutonamousBackward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() > 2.0; // if it lasts longer than two seconds
+    return timer.get() > TIMING; // if it lasts longer than two seconds
   }
 
   // Called once the command ends or is interrupted.
