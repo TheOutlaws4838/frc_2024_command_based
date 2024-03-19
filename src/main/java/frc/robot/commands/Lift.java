@@ -30,7 +30,9 @@ public class Lift extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!m_actuator.get() && axisSpeed > 0) return;
+    if (!m_actuator.get() && axisSpeed > 0) return; // check if the actuator is pressed and you are continuing to expand the lift
+    if (Math.abs(axisSpeed) > 0.1) return; // check if the value of the axis (possitive or negative) is greater then 10%
+
     m_lift.set(axisSpeed);
   }
 
