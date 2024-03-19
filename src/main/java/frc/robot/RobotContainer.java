@@ -5,8 +5,14 @@
 package frc.robot;
 
 import static frc.robot.Constants.LauncherConstants.DRIVE_SPEED;
+import static frc.robot.Constants.LauncherConstants.kLiftLeft;
+import static frc.robot.Constants.LauncherConstants.kLiftLeftLimit;
+import static frc.robot.Constants.LauncherConstants.kLiftRight;
+import static frc.robot.Constants.LauncherConstants.kLiftRightLimit;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -15,6 +21,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutonamousCommands;
 import frc.robot.commands.Autos;
 import frc.robot.commands.LaunchNote;
+import frc.robot.commands.Lift;
 import frc.robot.commands.PrepareLaunch;
 import frc.robot.subsystems.PWMDrivetrain;
 import frc.robot.subsystems.PWMLauncher;
@@ -38,6 +45,11 @@ public class RobotContainer {
   private final PWMLauncher m_launcher = new PWMLauncher();
   // private final CANLauncher m_launcher = new CANLauncher();
 
+  private final PWMSparkMax m_lift_left = new PWMSparkMax(kLiftLeft);
+  private final PWMSparkMax m_lift_right = new PWMSparkMax(kLiftRight);
+
+  private final DigitalInput m_lift_left_actuator = new DigitalInput(kLiftLeftLimit);
+  private final DigitalInput m_lift_right_actuator = new DigitalInput(kLiftRightLimit);
   /*
    * The gamepad provided in the KOP shows up like an XBox controller if the mode
    * switch is set to X mode using the
@@ -93,6 +105,8 @@ public class RobotContainer {
      * (green) button. Run the PrepareLaunch
      * command for 1 seconds and then run the LaunchNote command
      */
+
+
     m_operatorController
         .a()
         .whileTrue(
@@ -102,6 +116,11 @@ public class RobotContainer {
                 .handleInterrupt(() -> m_launcher.stop()));
 
     m_operatorController.b().whileTrue(m_launcher.getIntakeCommand());
+    
+    new RunCommand(() -> {
+      new Lift(m_operatorController.getLeftY(), m_lift_left, m_lift_left_actuator);
+      new Lift(m_operatorController.getRightY(), m_lift_right, m_lift_right_actuator);
+    });
   }
 
   /**
