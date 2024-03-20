@@ -45,11 +45,9 @@ public final class Constants {
     public static final int kLauncherCurrentLimit = 80;
     public static final int kFeedCurrentLimit = 80;
 
-    public static final int kLiftLeft = 99;
-    public static final int kLiftLeftLimit = 101;
+    public static final int kLiftLeft = 6;
 
-    public static final int kLiftRight = 100;
-    public static final int kLiftRightLimit = 102;
+    public static final int kLiftRight = 7;
 
     // Speeds for wheels when intaking and launching. Intake speeds are negative to
     // run the wheels
@@ -61,6 +59,7 @@ public final class Constants {
 
     public static final double kLauncherDelay = 1;
 
+    public static final float LIFT_SPEED = 1f;
     public static final float DRIVE_SPEED = 1f;
     public static final float AUTONAMOUS_DRIVE_SPEED = 0.45f;
     public static final double TIMING = 3;

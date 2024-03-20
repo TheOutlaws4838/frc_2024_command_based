@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import static frc.robot.Constants.LauncherConstants.LIFT_SPEED;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -11,12 +13,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class Lift extends Command {
   
   private final PWMSparkMax m_lift;
-  private final DigitalInput m_actuator;
   private final double axisSpeed;
   /** Creates a new Lift. */
-  public Lift(double axisSpeed, PWMSparkMax lift, DigitalInput actuator) {
+  public Lift(double axisSpeed, PWMSparkMax lift) {
     m_lift = lift;
-    m_actuator = actuator;
     this.axisSpeed = axisSpeed;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -30,10 +30,8 @@ public class Lift extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!m_actuator.get() && axisSpeed > 0) return; // check if the actuator is pressed and you are continuing to expand the lift
-    if (Math.abs(axisSpeed) > 0.1) return; // check if the value of the axis (possitive or negative) is greater then 10%
-
-    m_lift.set(axisSpeed);
+    if (Math.abs(axisSpeed) < 0.1) return; // check if the value of the axis (possitive or negative) is greater then 10%
+    m_lift.set(-(axisSpeed * LIFT_SPEED));
   }
 
   // Called once the command ends or is interrupted.
