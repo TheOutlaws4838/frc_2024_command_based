@@ -112,11 +112,7 @@ public class RobotContainer {
                 .handleInterrupt(() -> m_launcher.stop()));
 
     m_operatorController.b().whileTrue(m_launcher.getIntakeCommand());
-    
-    new RunCommand(() -> {
-      new Lift(m_operatorController.getLeftY(), m_lift_left);
-      new Lift(m_operatorController.getRightY(), m_lift_right);
-    });
+
   }
 
   /**
@@ -129,6 +125,13 @@ public class RobotContainer {
     // return Autos.exampleAuto(m_drivetrain);
 
     return new AutonamousCommands(m_drivetrain);
+  }
+
+  public Command getTeleopCommand () {
+    return new RunCommand(() -> {
+      new Lift(m_operatorController.getLeftY(), m_lift_left);
+      new Lift(m_operatorController.getRightY(), m_lift_right);
+    });
   }
 
 }
